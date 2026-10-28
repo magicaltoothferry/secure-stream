@@ -25,6 +25,8 @@
   li { margin:6px 0 }
   b { color:var(--fg) }
   .note { color:var(--mut); font-size:14px }
+  .code { font-size:34px; font-weight:800; letter-spacing:6px; color:var(--pink); margin:6px 0; text-align:center }
+  .share { color:var(--mut); font-size:14px; margin:6px 0 0 }
   a { color:#fbb9d8 }
 </style>
 </head>
@@ -34,8 +36,9 @@
   <h1>Secure Stream</h1>
   <p class="tag">Movies, series and live TV, with a built-in VPN. Works on any Android device: made for your phone, and just as much at home on tablets, TVs, TV boxes and streaming sticks.</p>
 
-  <a id="dl" class="btn" href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk">⬇ Download for Android</a>
+  <a id="dl" class="btn" autofocus href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk">⬇ Download for Android</a>
   <p id="ver" class="ver"></p>
+  <p class="share">Share: <b>aftv.news/5504403</b></p>
 
   <div class="card">
     <h2>Install</h2>
@@ -48,9 +51,9 @@
 
   <div class="card">
     <h2>TVs, boxes and streaming sticks</h2>
-    <p class="note">Android TV, Google TV, Fire TV, Chromecast with Google TV, Mi Box, Shield and other Android boxes: install the free <b>Downloader</b> app on the device and enter this address:</p>
-    <p class="note"><b>magicaltoothferry.github.io/secure-stream/get</b></p>
-    <p class="note">The download starts by itself.</p>
+    <p class="note">Android TV, Google TV, Fire TV, Chromecast with Google TV, Mi Box, Shield and other Android boxes: install the free <b>Downloader</b> app on the device and enter the code:</p>
+    <p class="code">5504403</p>
+    <p class="note">Then press <b>Download for Android</b> with the remote.</p>
   </div>
 
   <div class="card">
@@ -60,6 +63,8 @@
   </div>
 </main>
 <script>
+// A TV remote lands on the download button first (Downloader code 5504403 opens this page).
+document.getElementById('dl').focus();
 // Link the version-stamped copy when the release has one: a browser names the
 // saved file after the URL, and a fixed name piles up as -1.apk, -2.apk.
 fetch('https://api.github.com/repos/magicaltoothferry/secure-stream/releases/latest')
