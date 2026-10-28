@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Stream: downloading</title>
+<!-- Instant download for the Downloader app and TV browsers: no reading, no
+     tapping. GitHub Pages cannot send a real redirect, so a meta-refresh does it,
+     with a script and a big focusable button as fallbacks. Points at the fixed
+     release-asset name, so it never needs editing when a version ships. -->
+<meta http-equiv="refresh" content="0; url=https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk">
+<style>
+  body { margin:0; background:#07080f; color:#f4f1f6; font:20px/1.5 system-ui, sans-serif;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center }
+  a { display:inline-block; margin-top:24px; padding:20px 36px; border-radius:16px; text-decoration:none;
+      background:linear-gradient(135deg, #f06aa8, #b8336e); color:#fff; font-weight:700 }
+  a:focus { outline:4px solid #fbb9d8; outline-offset:4px }
+</style>
+</head>
+<body>
+<div>
+  <div>Downloading Secure Stream…</div>
+  <a id="go" href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk" autofocus>⬇ Download</a>
+</div>
+<script>
+location.replace(document.getElementById('go').href);
+document.getElementById('go').focus();
+</script>
+</body>
+</html>
