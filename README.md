@@ -1,10 +1,11 @@
 # Secure Stream
 
-Movies, series and live TV for Android phones, tablets and Android TV, with a built-in VPN.
+Movies, series and live TV, with a built-in VPN, for any Android device: phones first, plus tablets,
+Android TV, Google TV, Fire TV, TV boxes and streaming sticks.
 
 **Download:** https://magicaltoothferry.github.io/secure-stream/
 
-**Android TV / Fire TV:** in the Downloader app, open
+**TVs, boxes and streaming sticks:** in the Downloader app, open
 `magicaltoothferry.github.io/secure-stream/get`. The download starts by itself.
 
 Secure Stream includes the GLC Secure Node: the app only works while it runs, and other
