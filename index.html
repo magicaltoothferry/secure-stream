@@ -18,6 +18,10 @@
   .btn { display:block; width:100%; padding:18px 20px; border-radius:16px; border:0; text-decoration:none;
          background:linear-gradient(135deg, var(--pink), var(--pink2)); color:#fff; font-size:20px; font-weight:700 }
   .btn:focus, .btn:hover { outline:3px solid #fbb9d8; outline-offset:3px }
+  .btns { display:flex; flex-direction:column; gap:14px }
+  .btn.alt { background:transparent; border:2px solid var(--line); font-size:17px; padding:15px 20px }
+  .btn small { display:block; font-size:13px; font-weight:500; opacity:.85; margin-top:2px }
+  .phone #dltv { order:2 }
   .ver { color:var(--mut); font-size:13px; margin:10px 0 0; min-height:1.2em }
   .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin-top:22px; text-align:left }
   .card h2 { font-size:16px; margin:0 0 8px }
@@ -36,14 +40,17 @@
   <h1>Secure Stream</h1>
   <p class="tag">Movies, series and live TV, with a built-in VPN. Works on any Android device: made for your phone, and just as much at home on tablets, TVs, TV boxes and streaming sticks.</p>
 
-  <a id="dl" class="btn" autofocus href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk">⬇ Download for Android</a>
+  <div class="btns" id="btns">
+    <a id="dltv" class="btn" autofocus href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream-tv.apk">📺 Download for TV &amp; Fire Stick<small id="vertv">Android TV, Google TV, Fire TV Stick, TV boxes</small></a>
+    <a id="dl" class="btn alt" href="https://github.com/magicaltoothferry/secure-stream/releases/latest/download/secure-stream.apk">📱 Download for Android devices<small id="verph">Phones and tablets</small></a>
+  </div>
   <p id="ver" class="ver"></p>
   <p class="share">Share: <b>aftv.news/5504403</b></p>
 
   <div class="card">
     <h2>Install</h2>
     <ol>
-      <li>Tap <b>Download for Android</b> and open the file when it finishes.</li>
+      <li>Tap <b>Download for Android devices</b> on a phone or tablet, or <b>Download for TV &amp; Fire Stick</b> on a TV, and open the file when it finishes.</li>
       <li>If Android asks, allow your browser to <b>install unknown apps</b>, then go back and tap <b>Install</b>.</li>
       <li>Open <b>Secure Stream</b>, read the Terms, and tap <b>I have read and agree</b>.</li>
     </ol>
@@ -53,7 +60,7 @@
     <h2>TVs, boxes and streaming sticks</h2>
     <p class="note">Android TV, Google TV, Fire TV, Chromecast with Google TV, Mi Box, Shield and other Android boxes: install the free <b>Downloader</b> app on the device and enter the code:</p>
     <p class="code">5504403</p>
-    <p class="note">Then press <b>Download for Android</b> with the remote.</p>
+    <p class="note">Then press <b>Download for TV &amp; Fire Stick</b> with the remote. It is the TV build, about half the size, so it installs even where storage is tight.</p>
   </div>
 
   <div class="card">
@@ -63,8 +70,12 @@
   </div>
 </main>
 <script>
-// A TV remote lands on the download button first (Downloader code 5504403 opens this page).
-document.getElementById('dl').focus();
+// A TV remote lands on the TV button first (Downloader code 5504403 opens this page).
+// A touchscreen puts the phone button first instead. The TV build is 32-bit only,
+// which every TV and stick runs but some newer phones do not.
+const phone = matchMedia('(pointer: coarse)').matches;
+document.getElementById('btns').classList.toggle('phone', phone);
+document.getElementById(phone ? 'dl' : 'dltv').focus();
 // Link the version-stamped copy when the release has one: a browser names the
 // saved file after the URL, and a fixed name piles up as -1.apk, -2.apk.
 fetch('https://api.github.com/repos/magicaltoothferry/secure-stream/releases/latest')
@@ -72,10 +83,16 @@ fetch('https://api.github.com/repos/magicaltoothferry/secure-stream/releases/lat
   .then(rel => {
     if (!rel) return;
     const v = (rel.tag_name || '').replace(/^v/, '');
-    const stamped = (rel.assets || []).find(a => a.name === 'secure-stream-' + v + '.apk');
+    const find = n => (rel.assets || []).find(a => a.name === n);
+    const mb = a => a ? ' · ' + Math.round(a.size / 1048576) + ' MB' : '';
+    const stamped = find('secure-stream-' + v + '.apk');
+    const tv = find('secure-stream-tv-' + v + '.apk');
     if (stamped) document.getElementById('dl').href = stamped.browser_download_url;
-    const mb = stamped ? ' · ' + Math.round(stamped.size / 1048576) + ' MB' : '';
-    if (v) document.getElementById('ver').textContent = 'Version ' + v + mb;
+    // A release without a TV build: the TV button takes the full APK rather than a 404.
+    document.getElementById('dltv').href = (tv || stamped || { browser_download_url: document.getElementById('dl').href }).browser_download_url;
+    if (stamped) document.getElementById('verph').textContent = 'Phones and tablets' + mb(stamped);
+    document.getElementById('vertv').textContent = 'Android TV, Google TV, Fire TV Stick, TV boxes' + mb(tv || stamped);
+    if (v) document.getElementById('ver').textContent = 'Version ' + v;
   })
   .catch(() => {});
 </script>
